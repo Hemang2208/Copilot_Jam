@@ -6,18 +6,9 @@ import { motion } from "framer-motion";
 import { Starfield } from "@/components/starfield";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { useEffect } from "react";
 
 export default function LandingPage() {
   const router = useRouter();
-
-  useEffect(() => {
-    const setLoggedIn = localStorage.getItem("setLoggedIn");
-
-    if (setLoggedIn !== "true") {
-      router.replace("/login");
-    }
-  }, [router]);
 
   const steps = [
     {
