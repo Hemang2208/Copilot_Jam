@@ -33,7 +33,7 @@ export function SkillCard({
           <p className="text-sm leading-relaxed">{skill.description}</p>
           <div className="flex items-center justify-between pt-2">
             <div className="text-cyan-300 text-sm font-medium">{skill.cost}</div>
-            <NeonButton onClick={onLearn}>Learn</NeonButton>
+            <NeonButton className="text-white cursor-pointer" onClick={onLearn}>Learn</NeonButton>
           </div>
         </CardContent>
       </Card>

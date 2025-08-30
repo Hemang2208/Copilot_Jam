@@ -13,7 +13,7 @@ export default function PlanetsPage() {
 
   return (
     <motion.main
-      className="min-h-dvh"
+      className="min-h-screen bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0e7490] text-cyan-100"
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35 }}
