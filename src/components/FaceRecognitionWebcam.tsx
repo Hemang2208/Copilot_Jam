@@ -1,29 +1,44 @@
+export {};
 
-export {}
-
-import React, { useRef, useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import './FaceRecognitionWebcam.css';
-import { loadTmImage } from '@/lib/tmImageLoader';
+import React, { useRef, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import "./FaceRecognitionWebcam.css";
+import { loadTmImage } from "@/lib/tmImageLoader";
 
 // Add global declaration for tmImage
 declare global {
   interface Window {
-    tmImage: any;
+    tmImage: {
+      load: (
+        modelUrl: string,
+        metadataUrl: string
+      ) => Promise<{
+        predict: (
+          input: HTMLVideoElement
+        ) => Promise<Array<{ className: string; probability: number }>>;
+      }>;
+    };
   }
 }
-
 
 interface FaceRecognitionWebcamProps {
   onRecognized?: (label: string) => void;
 }
 
-
-const FaceRecognitionWebcam: React.FC<FaceRecognitionWebcamProps> = ({ onRecognized }) => {
+const FaceRecognitionWebcam: React.FC<FaceRecognitionWebcamProps> = ({
+  onRecognized,
+}) => {
   const router = useRouter();
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const recognizedLabelsRef = useRef<{ Prakhar: boolean; Hemang: boolean }>({ Prakhar: false, Hemang: false });
-  const modelRef = useRef<{ predict: (input: HTMLVideoElement) => Promise<Array<{ className: string; probability: number }>> } | null>(null);
+  const recognizedLabelsRef = useRef<{ Prakhar: boolean; Hemang: boolean }>({
+    Prakhar: false,
+    Hemang: false,
+  });
+  const modelRef = useRef<{
+    predict: (
+      input: HTMLVideoElement
+    ) => Promise<Array<{ className: string; probability: number }>>;
+  } | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [id, setId] = useState("");
@@ -32,14 +47,16 @@ const FaceRecognitionWebcam: React.FC<FaceRecognitionWebcamProps> = ({ onRecogni
 
   useEffect(() => {
     let intervalId: NodeJS.Timeout | null = null;
-    const MODEL_URL = "https://teachablemachine.withgoogle.com/models/8LsIbRnqg/";
+    const MODEL_URL =
+      "https://teachablemachine.withgoogle.com/models/8LsIbRnqg/";
     let webcamReady = false;
     let modelReady = false;
 
     const startVideo = () => {
       console.log("Attempting to access webcam...");
-      navigator.mediaDevices.getUserMedia({ video: true })
-        .then(stream => {
+      navigator.mediaDevices
+        .getUserMedia({ video: true })
+        .then((stream) => {
           console.log("Webcam stream obtained.");
           if (videoRef.current) {
             videoRef.current.srcObject = stream;
@@ -50,17 +67,17 @@ const FaceRecognitionWebcam: React.FC<FaceRecognitionWebcamProps> = ({ onRecogni
             };
           }
         })
-        .catch(err => {
-          console.error('Error accessing webcam:', err);
+        .catch((err) => {
+          console.error("Error accessing webcam:", err);
           const advice = [
-            'Make sure you allowed webcam access when prompted.',
-            'Check browser settings and site permissions for camera access.',
-            'Ensure your device has a working webcam.',
-            'Close other apps that might be using the webcam.',
-            'Use HTTPS or localhost (not HTTP) for webcam access.',
-            'Try a different browser or disable incognito/private mode.'
-          ].join(' ');
-          setError('Error accessing webcam: ' + err.message + '. ' + advice);
+            "Make sure you allowed webcam access when prompted.",
+            "Check browser settings and site permissions for camera access.",
+            "Ensure your device has a working webcam.",
+            "Close other apps that might be using the webcam.",
+            "Use HTTPS or localhost (not HTTP) for webcam access.",
+            "Try a different browser or disable incognito/private mode.",
+          ].join(" ");
+          setError("Error accessing webcam: " + err.message + ". " + advice);
           setLoading(false);
         });
     };
@@ -77,11 +94,11 @@ const FaceRecognitionWebcam: React.FC<FaceRecognitionWebcamProps> = ({ onRecogni
             let foundPrakhar = recognizedLabelsRef.current.Prakhar;
             let foundHemang = recognizedLabelsRef.current.Hemang;
             prediction.forEach((p) => {
-              if (p.className === 'Prakhar' && p.probability > 0.85) {
+              if (p.className === "Prakhar" && p.probability > 0.85) {
                 foundPrakhar = true;
                 recognizedLabelsRef.current.Prakhar = true;
               }
-              if (p.className === 'Hemang' && p.probability > 0.85) {
+              if (p.className === "Hemang" && p.probability > 0.85) {
                 foundHemang = true;
                 recognizedLabelsRef.current.Hemang = true;
               }
@@ -89,16 +106,16 @@ const FaceRecognitionWebcam: React.FC<FaceRecognitionWebcamProps> = ({ onRecogni
             if (foundPrakhar && foundHemang) {
               console.log("Both Prakhar and Hemang recognized.");
               if (onRecognized) {
-                onRecognized('success');
+                onRecognized("success");
               }
-              router.push('/');
+              router.push("/");
               if (intervalId) {
                 clearInterval(intervalId);
               }
             }
           } catch (err) {
-            console.error('Prediction error:', err);
-            setError('Prediction error: ' + (err as Error).message);
+            console.error("Prediction error:", err);
+            setError("Prediction error: " + (err as Error).message);
             setLoading(false);
             if (intervalId) clearInterval(intervalId);
           }
@@ -113,21 +130,24 @@ const FaceRecognitionWebcam: React.FC<FaceRecognitionWebcamProps> = ({ onRecogni
         console.log("Loading Teachable Machine tmImage library...");
         await loadTmImage();
         const tmImage = window.tmImage;
-        if (!tmImage || typeof tmImage.load !== 'function') {
+        if (!tmImage || typeof tmImage.load !== "function") {
           console.error("Teachable Machine tmImage library failed to load.");
-          setError('Teachable Machine tmImage library failed to load.');
+          setError("Teachable Machine tmImage library failed to load.");
           setLoading(false);
           return;
         }
         console.log("Loading model from", MODEL_URL);
-        modelRef.current = await tmImage.load(MODEL_URL + 'model.json', MODEL_URL + 'metadata.json');
+        modelRef.current = await tmImage.load(
+          MODEL_URL + "model.json",
+          MODEL_URL + "metadata.json"
+        );
         modelReady = true;
         console.log("Model loaded successfully.");
         maybeStartPrediction();
         startVideo();
       } catch (err) {
-        console.error('Model load error:', err);
-        setError('Model load error: ' + (err as Error).message);
+        console.error("Model load error:", err);
+        setError("Model load error: " + (err as Error).message);
         setLoading(false);
       }
     })();
@@ -138,12 +158,21 @@ const FaceRecognitionWebcam: React.FC<FaceRecognitionWebcamProps> = ({ onRecogni
 
   return (
     <div className="face-recognition-container face-recognition-flex">
-      <div className="face-recognition-webcam-panel">
-        <div className="face-recognition-webcam-box">
-          <h3>Open Webcam</h3>
-          {loading && <div className="face-recognition-loading">Loading model and webcam...</div>}
-          {error && <div className="face-recognition-error">{error}</div>}
-          <video ref={videoRef} autoPlay muted width="640" height="480" className={`face-recognition-video${loading || error ? ' face-recognition-video-hidden' : ''}`} />
+      {/* Webcam video is now a floating overlay in the bottom-right corner */}
+      <div className="fixed bottom-6 right-6 z-50 shadow-2xl rounded-xl overflow-hidden border-2 border-cyan-400/60 bg-slate-900/80 backdrop-blur-lg" style={{ width: 320, height: 240 }}>
+        <div className="p-2 flex flex-col items-center">
+          <h3 className="text-cyan-200 text-xs mb-1">Webcam</h3>
+          {loading && <div className="face-recognition-loading text-xs">Loading model and webcam...</div>}
+          {error && <div className="face-recognition-error text-xs">{error}</div>}
+          <video
+            ref={videoRef}
+            autoPlay
+            muted
+            width={300}
+            height={200}
+            className={`face-recognition-video${loading || error ? ' face-recognition-video-hidden' : ''} rounded-lg`}
+            style={{ background: '#0f172a' }}
+          />
         </div>
       </div>
       <div className="text-white face-recognition-login-panel">
@@ -151,12 +180,12 @@ const FaceRecognitionWebcam: React.FC<FaceRecognitionWebcamProps> = ({ onRecogni
           <h3>Secondary Login Method</h3>
           <form
             className="face-recognition-login-form"
-            onSubmit={e => {
+            onSubmit={(e) => {
               e.preventDefault();
               if (id === "1" && pass === "APAP") {
                 setLoginError(null);
                 if (onRecognized) onRecognized("success");
-                router.push('/');
+                router.push("/");
               } else {
                 setLoginError("Invalid ID or Password.");
               }
@@ -164,14 +193,24 @@ const FaceRecognitionWebcam: React.FC<FaceRecognitionWebcamProps> = ({ onRecogni
           >
             <label>
               ID:
-              <input type="text" value={id} onChange={e => setId(e.target.value)} />
+              <input
+                type="text"
+                value={id}
+                onChange={(e) => setId(e.target.value)}
+              />
             </label>
             <label>
               Password:
-              <input type="password" value={pass} onChange={e => setPass(e.target.value)} />
+              <input
+                type="password"
+                value={pass}
+                onChange={(e) => setPass(e.target.value)}
+              />
             </label>
             <button type="submit">Login</button>
-            {loginError && <div className="face-recognition-login-error">{loginError}</div>}
+            {loginError && (
+              <div className="face-recognition-login-error">{loginError}</div>
+            )}
           </form>
         </div>
       </div>

@@ -1,3 +1,11 @@
+// Extend the Window interface to include tf and tmImage
+declare global {
+  interface Window {
+    tf?: any;
+    tmImage?: any;
+  }
+}
+
 // Utility to dynamically load Teachable Machine's tmImage library
 export async function loadTmImage() {
   // Load TensorFlow.js if not present
