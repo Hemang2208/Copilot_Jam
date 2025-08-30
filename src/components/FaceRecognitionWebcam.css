@@ -1,0 +1,55 @@
+.face-recognition-webcam-box {
+  background: #18181b;
+  border: 2px solid #00ffe7;
+  border-radius: 12px;
+  padding: 2em 1.5em;
+  box-shadow: 0 2px 16px rgba(0,255,231,0.15);
+  margin: 0 auto;
+  max-width: 400px;
+}
+.face-recognition-login-box {
+  background: #18181b;
+  border: 2px solid #00ffe7;
+  border-radius: 12px;
+  padding: 2em 1.5em;
+  box-shadow: 0 2px 16px rgba(0,255,231,0.15);
+  margin: 0 auto;
+  max-width: 350px;
+}
+.face-recognition-container {
+  position: relative;
+}
+.face-recognition-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.face-recognition-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.face-recognition-flex {
+  display: flex;
+  gap: 2em;
+  align-items: flex-start;
+}
+.face-recognition-webcam-panel {
+  flex: 1;
+}
+.face-recognition-login-panel {
+  flex: 1;
+  min-width: 300px;
+}
+.face-recognition-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+.face-recognition-login-error {
+  color: red;
+}
+.face-recognition-video-hidden {
+  display: none;
+}
