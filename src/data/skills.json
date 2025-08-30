@@ -1,0 +1,38 @@
+[
+  {
+    "id": "astro-training",
+    "title": "Astronaut Training",
+    "category": "Exploration",
+    "duration": "6 weeks",
+    "license": "L2 Spacewalk",
+    "credits": 420,
+    "level": "Intermediate"
+  },
+  {
+    "id": "ai-governance",
+    "title": "AI Governance",
+    "category": "Civics",
+    "duration": "4 weeks",
+    "license": "Ethics Cert A",
+    "credits": 360,
+    "level": "Advanced"
+  },
+  {
+    "id": "quantum-design",
+    "title": "Quantum Design",
+    "category": "Engineering",
+    "duration": "8 weeks",
+    "license": "Q-Field Safety",
+    "credits": 540,
+    "level": "Advanced"
+  },
+  {
+    "id": "terraforming-ops",
+    "title": "Terraforming Ops",
+    "category": "Planetary",
+    "duration": "3 weeks",
+    "license": "Atmos Mod L1",
+    "credits": 300,
+    "level": "Beginner"
+  }
+]

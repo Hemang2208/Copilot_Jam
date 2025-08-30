@@ -1,0 +1,52 @@
+{
+  "locations": [
+    {
+      "id": "mars-colony-a",
+      "planet": "Mars",
+      "region": "Valles Marineris",
+      "listings": [
+        { "type": "room", "name": "Hab Pod S-12", "credits": 120, "details": "Sleeps 2 • Radiation shielded" },
+        { "type": "oxygen", "name": "O2 Credits x100", "credits": 80, "details": "Certified breathable O2" },
+        { "type": "meal", "name": "Hydroponic Greens Set", "credits": 30, "details": "Fresh kale • Micro-tomatoes" },
+        { "type": "gear", "name": "Dust Suit Mk II", "credits": 260, "details": "Low-grav • Anti-static" },
+        { "type": "transport", "name": "Skiff Shuttle", "credits": 200, "details": "Canyon hop • 15 min" }
+      ]
+    },
+    {
+      "id": "titan-outpost",
+      "planet": "Titan",
+      "region": "Kraken Mare",
+      "listings": [
+        { "type": "room", "name": "Cryo Capsule T-5", "credits": 150, "details": "Thermal stabilized" },
+        { "type": "oxygen", "name": "O2 Credits x200", "credits": 140, "details": "Deep-space grade" },
+        { "type": "meal", "name": "Protein Synth Pack", "credits": 45, "details": "High cal • Compact" },
+        { "type": "gear", "name": "Pressure Suit HX", "credits": 380, "details": "Methane resistant" },
+        { "type": "transport", "name": "Orbital Hopper", "credits": 480, "details": "Low orbit transfer" }
+      ]
+    },
+    {
+      "id": "europa-station",
+      "planet": "Europa",
+      "region": "Ice Shelf Zeta",
+      "listings": [
+        { "type": "room", "name": "Sub-Ice Cabin", "credits": 210, "details": "Geothermal heated" },
+        { "type": "oxygen", "name": "O2 Credits x150", "credits": 110, "details": "Cryo filtered" },
+        { "type": "meal", "name": "Warm Ration Set", "credits": 55, "details": "Soup • Bread • Tea" },
+        { "type": "gear", "name": "Thermal Exo Gloves", "credits": 160, "details": "Sub-zero dexterity" },
+        { "type": "transport", "name": "Under-ice Sub", "credits": 520, "details": "Sonar guided" }
+      ]
+    },
+    {
+      "id": "moon-base-one",
+      "planet": "Moon Base",
+      "region": "Mare Tranquillitatis",
+      "listings": [
+        { "type": "room", "name": "Dome Suite L-1", "credits": 180, "details": "Earthrise view" },
+        { "type": "oxygen", "name": "O2 Credits x120", "credits": 95, "details": "Station pure" },
+        { "type": "meal", "name": "Lunar Bento", "credits": 50, "details": "Rice • Algae • Protein" },
+        { "type": "gear", "name": "Mag Boots Pro", "credits": 220, "details": "Zero drift" },
+        { "type": "transport", "name": "Mass Driver Shuttle", "credits": 440, "details": "Low energy ascent" }
+      ]
+    }
+  ]
+}
