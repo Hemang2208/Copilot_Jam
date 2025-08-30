@@ -50,14 +50,14 @@ export default function TravelPage() {
   }, []);
 
   return (
-    <main className="min-h-dvh">
+    <main className="min-h-screen bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0e7490] text-cyan-100">
       <Navbar />
       <section className="mx-auto max-w-6xl px-4 py-12">
         <HoloPanel>
           <h2 className="text-balance text-2xl font-semibold">
             Travel — {name}
           </h2>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-cyan-300/80">
             Your itinerary and boarding details are below. All data is static
             and for demo purposes only.
           </p>

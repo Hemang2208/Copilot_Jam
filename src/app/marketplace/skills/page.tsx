@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
@@ -13,6 +13,22 @@ export default function SkillsPage() {
   const [isLearning, setIsLearning] = useState(false)
   const [currentSkill, setCurrentSkill] = useState<string | null>(null)
   const [showSuccess, setShowSuccess] = useState(false)
+  const [learnedSkills, setLearnedSkills] = useState<string[]>([]);
+
+  // Load learned skills from localStorage on mount
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("learnedSkills");
+      if (saved) setLearnedSkills(JSON.parse(saved));
+    } catch {}
+  }, []);
+
+  // Save learned skills to localStorage when changed
+  useEffect(() => {
+    try {
+      localStorage.setItem("learnedSkills", JSON.stringify(learnedSkills));
+    } catch {}
+  }, [learnedSkills]);
 
   const container = {
     hidden: { opacity: 0 },
@@ -28,7 +44,7 @@ export default function SkillsPage() {
 
   return (
     <motion.main
-      className="min-h-dvh"
+      className="min-h-screen bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0e7490] text-cyan-100"
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35 }}
@@ -41,18 +57,22 @@ export default function SkillsPage() {
           animate="show"
           className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
         >
-          {MOCK_SKILLS.map((s) => (
-            <motion.div key={s.name} variants={item}>
-              <SkillCard
-                skill={s}
-                onLearn={() => {
-                  setCurrentSkill(s.name)
-                  setIsLearning(true)
-                  setShowSuccess(false)
-                }}
-              />
-            </motion.div>
-          ))}
+          {MOCK_SKILLS.map((s) => {
+            const alreadyLearned = learnedSkills.includes(s.name);
+            return (
+              <motion.div className={"text-white " + (alreadyLearned ? "opacity-60" : "cursor-pointer")}
+                key={s.name} variants={item}>
+                <SkillCard
+                  skill={s}
+                  onLearn={alreadyLearned ? undefined : () => {
+                    setCurrentSkill(s.name)
+                    setIsLearning(true)
+                    setShowSuccess(false)
+                  }}
+                />
+              </motion.div>
+            );
+          })}
         </motion.div>
       </section>
       <Footer />
@@ -63,10 +83,11 @@ export default function SkillsPage() {
           onComplete={() => {
             setIsLearning(false)
             setShowSuccess(true)
+            setLearnedSkills((prev) => prev.includes(currentSkill) ? prev : [currentSkill!, ...prev]);
           }}
         />
       )}
-      {showSuccess && <SuccessPanel message="Your license has been issued. You’re cleared to book travel." />}
+      {showSuccess && <SuccessPanel message="Your license has been issued. Youre cleared to book travel." />}
     </motion.main>
   )
 }

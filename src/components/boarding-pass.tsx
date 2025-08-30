@@ -56,8 +56,8 @@ export function BoardingPass({
               {code}
             </p>
             <Image
-              width={34}
-              height={34}
+              width={54}
+              height={54}
               alt="Encoded QR"
               className="mt-2 h-24 w-24 opacity-80"
               src="/qr-code.png"
